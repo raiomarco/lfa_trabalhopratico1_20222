@@ -314,3 +314,23 @@ const automaton = parseAutomaton('automato.txt');
 automaton.debug();
 console.log(automaton.visualize());
 console.log(automaton.accepts("AB12"));
+
+// const dfa = automaton.toDFA();
+// dfa.debug();
+// console.log(dfa.visualize());
+// console.log(dfa.accepts("AB12"));
+
+// const nfa = automaton.toNFA();
+// nfa.debug();
+// console.log(nfa.visualize());
+// console.log(nfa.accepts("AB12"));
+
+// const minNFA = automaton.toMinNFA();
+// minNFA.debug();
+// console.log(minNFA.visualize());
+// console.log(minNFA.accepts("AB12"));
+
+// const minDFA = dfa.toMinDFA();
+// minDFA.debug();
+// console.log(minDFA.visualize());
+// console.log(minDFA.accepts("AB12"));
