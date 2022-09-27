@@ -334,3 +334,87 @@ console.log(automaton.accepts("AB12"));
 // minDFA.debug();
 // console.log(minDFA.visualize());
 // console.log(minDFA.accepts("AB12"));
+
+// explicações do funcionamento do automaton
+// temos uma classe "automaton"
+// que tem um array de estados, um array de transições, um array de estados de aceitação, um array de símbolos do alfabeto e um estado inicial
+// cada estado
+// tem um nome, um array de transições e um array de estados para os quais ele pode ir
+// o estado inicial é onde começamos a avaliar se uma string é aceita
+// e caso no fim da string termine em um estado de aceitação, a string é aceita
+// o automaton é gerado a partir da função parseAutomaton, a qual
+// lê um arquivo de texto e cria um automaton a partir dele
+// o arquivo de texto é composto por linhas que começam com #
+// e cada # indica um tipo de informação
+// #states indica que as próximas linhas serão os nomes dos estados
+// #initial indica que a próxima linha será o nome do estado inicial
+// #accepting indica que as próximas linhas serão os nomes dos estados de aceitação
+// #alphabet indica que as próximas linhas serão os símbolos do alfabeto
+// #transitions indica que as próximas
+// linhas serão as transições
+// e o metodo accepts dentro da classe automaton valida se uma string é aceita ou não, funcionando da seguinte forma:
+// ele começa com o estado inicial
+// e para cada símbolo da string
+// ele verifica se o estado atual tem uma transição para um estado que aceita aquele símbolo
+// caso tenha, ele vai para o estado que aceita aquele símbolo
+// caso não tenha, a string não é aceita
+// e ele retorna false
+// caso ele chegue ao fim da string e o estado atual seja um estado de aceitação, a string é aceita
+// e ele retorna true
+// caso ele chegue ao fim da string e o estado atual não seja um estado de aceitação, a string não é aceita
+// e ele retorna false
+// por fim temos os metodos de conversão dos tipos de automatos
+// o metodo toDFA converte um automaton para um dfa, funcionando da seguinte forma:
+// ele cria um novo dfa
+// e para cada estado do automaton
+// ele cria um novo estado no dfa
+// e para cada símbolo do alfabeto
+// ele verifica se o estado atual do
+// automaton tem uma transição para um estado que aceita aquele símbolo
+// caso tenha, ele cria uma transição do estado atual do dfa para o estado que aceita aquele símbolo
+// caso não
+// ele cria uma transição do estado atual do dfa para um estado de erro
+// e por fim ele retorna o dfa
+// o metodo toNFA converte um automaton para um nfa, funcionando da seguinte forma:
+// ele cria um novo nfa
+// e para cada estado do automaton
+// ele cria um novo estado no nfa
+// e para cada símbolo do alfabeto
+// ele verifica se o estado atual do
+// automaton tem uma transição para um estado que aceita aquele símbolo
+// caso tenha, ele cria uma transição do estado atual do nfa para o estado que aceita aquele símbolo
+// caso não
+// ele cria uma transição do estado atual do nfa para um estado de erro
+// e por fim ele retorna o nfa
+// o metodo toMinNFA converte um automaton para um nfa mínimo, funcionando da seguinte forma:
+// ele cria um novo nfa mínimo
+// e para cada estado do automaton
+// ele cria um novo estado no nfa mínimo
+// e para cada símbolo do alfabeto
+// ele verifica se o estado atual do
+// automaton tem uma transição para um estado que aceita aquele símbolo
+// caso tenha, ele cria uma transição do estado atual do nfa mínimo para o estado que aceita aquele símbolo
+// caso não
+// ele cria uma transição do estado atual do nfa mínimo para um estado de erro
+// e por fim ele retorna o nfa mínimo
+// o metodo toMinDFA converte um dfa para um dfa mínimo, funcionando da seguinte forma:
+// ele cria um novo dfa mínimo
+// e para cada estado do dfa
+// ele cria um novo estado no dfa mínimo
+// e para cada símbolo do alfabeto
+// ele verifica se o estado atual do
+// dfa tem uma transição para um estado que aceita aquele símbolo
+// caso tenha, ele cria uma transição do estado atual do dfa mínimo para o estado que aceita aquele símbolo
+// caso não
+// ele cria uma transição do estado atual do dfa mínimo para um estado de erro
+// e por fim ele retorna o dfa mínimo
+// o metodo debug imprime no console todas as informações do automaton
+// o metodo visualize retorna uma string com todas as informações do automaton
+// e o metodo visualizeGraph retorna uma string com todas as informações do automaton no formato de um grafo
+// o qual ainda não funciona corretamente
+// e por fim temos o metodo main, que lê o arquivo de texto e cria o automaton
+// e depois chama o metodo visualize para imprimir no console todas as informações do automaton
+// e chama o metodo accepts para validar se uma string é aceita ou não
+// e por fim chama o metodo visualizeGraph para imprimir no console todas as informações do automaton no formato de um grafo
+// e o qual ainda não funciona corretamente
+// obs: os metodos de conversão ainda estão com problemas ocasionais =/
