@@ -88,6 +88,189 @@ class Automaton {
     }
     return this.accepting.includes(current);
   }
+
+  toDFA() {
+    let dfa = new Automaton();
+    let queue = [];
+    let visited = new Map();
+    let initial = this.initial.name;
+    queue.push(initial);
+    visited.set(initial, true);
+    while (queue.length > 0) {
+      let state = queue.shift();
+      let stateName = state;
+      let stateObject = new State(stateName);
+      dfa.states.push(stateObject);
+      if (stateName == initial) {
+        dfa.initial = stateObject;
+      }
+      if (this.accepting.includes(state)) {
+        dfa.accepting.push(stateObject);
+      }
+      for (let symbol of this.alphabet) {
+        let newState = "";
+        for (let i = 0; i < state.length; i++) {
+          let transitions = this.states[i].transitions;
+          for (let transition of transitions) {
+            if (transition.symbol == symbol) {
+              newState += transition.to.name;
+            }
+          }
+        }
+        if (newState == "") {
+          newState = "$";
+        }
+        if (!visited.has(newState)) {
+          queue.push(newState);
+          visited.set(newState, true);
+        }
+        let transition = new Transition(stateObject, dfa.states.find(s => s.name == newState), symbol);
+        stateObject.transitions.push(transition);
+        dfa.transitions.push(transition);
+      }
+    }
+    dfa.alphabet = this.alphabet;
+    return dfa;
+  }
+
+  toMinDFA() {
+    let dfa = this.toDFA();
+    let states = dfa.states;
+    let accepting = dfa.accepting;
+    //// let nonAccepting = states.filter(s => !accepting.includes(s));
+    let queue = [];
+    let visited = new Map();
+    let initial = dfa.initial.name;
+    queue.push(initial);
+    visited.set(initial, true);
+    while (queue.length > 0) {
+      let state = queue.shift();
+      let stateName = state;
+      let stateObject = states.find(s => s.name == stateName);
+      if (stateName == initial) {
+        dfa.initial = stateObject;
+      }
+      if (accepting.includes(state)) {
+        dfa.accepting.push(stateObject);
+      }
+      for (let symbol of dfa.alphabet) {
+        let newState = "";
+        for (let i = 0; i < state.length; i++) {
+          let transitions = states[i].transitions;
+          for (let transition of transitions) {
+            if (transition.symbol == symbol) {
+              newState += transition.to.name;
+            }
+          }
+        }
+        if (newState == "") {
+          newState = "$";
+        }
+        if (!visited.has(newState)) {
+          queue.push(newState);
+          visited.set(newState, true);
+        }
+        let transition = new Transition(stateObject, states.find(s => s.name == newState), symbol);
+        stateObject.transitions.push(transition);
+        dfa.transitions.push(transition);
+      }
+    }
+    dfa.alphabet = this.alphabet;
+    return dfa;
+  }
+
+  toNFA() {
+    let nfa = new Automaton();
+    let states = this.states;
+    let accepting = this.accepting;
+    //// let nonAccepting = states.filter(s => !accepting.includes(s));
+    let queue = [];
+    let visited = new Map();
+    let initial = this.initial.name;
+    queue.push(initial);
+    visited.set(initial, true);
+    while (queue.length > 0) {
+      let state = queue.shift();
+      let stateName = state;
+      let stateObject = new State(stateName);
+      nfa.states.push(stateObject);
+      if (stateName == initial) {
+        nfa.initial = stateObject;
+      }
+      if (accepting.includes(state)) {
+        nfa.accepting.push(stateObject);
+      }
+      for (let symbol of this.alphabet) {
+        let newState = "";
+        for (let i = 0; i < state.length; i++) {
+          let transitions = states[i].transitions;
+          for (let transition of transitions) {
+            if (transition.symbol == symbol) {
+              newState += transition.to.name;
+            }
+          }
+        }
+        if (newState == "") {
+          newState = "$";
+        }
+        if (!visited.has(newState)) {
+          queue.push(newState);
+          visited.set(newState, true);
+        }
+        let transition = new Transition(stateObject, nfa.states.find(s => s.name == newState), symbol);
+        stateObject.transitions.push(transition);
+        nfa.transitions.push(transition);
+      }
+    }
+    nfa.alphabet = this.alphabet;
+    return nfa;
+  }
+
+  toMinNFA() {
+    let nfa = this.toNFA();
+    let states = nfa.states;
+    let accepting = nfa.accepting;
+    //// let nonAccepting = states.filter(s => !accepting.includes(s));
+    let queue = [];
+    let visited = new Map();
+    let initial = nfa.initial.name;
+    queue.push(initial);
+    visited.set(initial, true);
+    while (queue.length > 0) {
+      let state = queue.shift();
+      let stateName = state;
+      let stateObject = states.find(s => s.name == stateName);
+      if (stateName == initial) {
+        nfa.initial = stateObject;
+      }
+      if (accepting.includes(state)) {
+        nfa.accepting.push(stateObject);
+      }
+      for (let symbol of nfa.alphabet) {
+        let newState = "";
+        for (let i = 0; i < state.length; i++) {
+          let transitions = states[i].transitions;
+          for (let transition of transitions) {
+            if (transition.symbol == symbol) {
+              newState += transition.to.name;
+            }
+          }
+        }
+        if (newState == "") {
+          newState = "$";
+        }
+        if (!visited.has(newState)) {
+          queue.push(newState);
+          visited.set(newState, true);
+        }
+        let transition = new Transition(stateObject, states.find(s => s.name == newState), symbol);
+        stateObject.transitions.push(transition);
+        nfa.transitions.push(transition);
+      }
+    }
+    nfa.alphabet = this.alphabet;
+    return nfa;
+  }
 }
 
 function parseAutomaton(filename) {
